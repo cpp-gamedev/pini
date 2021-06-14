@@ -16,15 +16,14 @@ bool pn::reader::read_file(std::filesystem::path const &filename) {
 
   std::string key;
   std::string value;
-  int delimeter_pos;
 
-  for (auto str : file_lines) {
-    delimeter_pos = str.find("=");
-    if (delimeter_pos != std::string::npos) {
+  for (const auto &str : file_lines) {
+    if (auto delimeter_pos = str.find('=');
+        delimeter_pos != std::string::npos) {
       key = str.substr(0, delimeter_pos);
       value = str.substr(delimeter_pos + 1);
 
-      key_value_pairs.insert({key, value});
+      key_value_pairs.insert({std::move(key), std::move(value)});
     }
   }
   return true;
