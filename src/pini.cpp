@@ -11,7 +11,7 @@ std::unordered_map<std::string, std::string> pn::reader::get_pairs() {
 }
 bool pn::reader::read_file(std::filesystem::path const &filename) {
 
-  std::vector<std::string> file_lines = util::get_lines(filename);
+  file_lines = util::get_lines(filename);
   if (file_lines.empty()) {
     return false;
   }
@@ -20,8 +20,6 @@ bool pn::reader::read_file(std::filesystem::path const &filename) {
   return true;
 }
 bool pn::reader::read_file(std::string const &raw_string) {
-  std::vector<std::string> file_lines;
-
   std::string str;
   std::istringstream str_stream(raw_string);
   while (getline(str_stream, str, '/')) {
