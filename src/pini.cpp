@@ -22,7 +22,7 @@ bool pn::reader::read_file(std::filesystem::path const &filename) {
 bool pn::reader::read_file(std::string const &raw_string) {
   std::string str;
   std::istringstream str_stream(raw_string);
-  while (getline(str_stream, str, '/')) {
+  while (getline(str_stream, str, '\n')) {
     file_lines.push_back(str);
   }
   key_value_pairs = util::insert_pairs(file_lines);
