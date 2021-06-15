@@ -1,5 +1,7 @@
 #include "pini.hpp"
 #include "util.hpp"
+#include <cstddef>
+#include <sstream>
 #include <vector>
 
 namespace pn {
@@ -13,20 +15,20 @@ bool pn::reader::read_file(std::filesystem::path const &filename) {
   if (file_lines.empty()) {
     return false;
   }
+  key_value_pairs = util::insert_pairs(file_lines);
 
-  std::string key;
-  std::string value;
-
-  for (const auto &str : file_lines) {
-    if (auto delimeter_pos = str.find('=');
-        delimeter_pos != std::string::npos) {
-      key = str.substr(0, delimeter_pos);
-      value = str.substr(delimeter_pos + 1);
-
-      key_value_pairs.insert({std::move(key), std::move(value)});
-    }
-  }
   return true;
 }
+bool pn::reader::read_file(std::string const &raw_string) {
+  std::vector<std::string> file_lines;
 
+  std::string str;
+  std::istringstream str_stream(raw_string);
+  while (getline(str_stream, str, '/')) {
+    file_lines.push_back(str);
+  }
+  key_value_pairs = util::insert_pairs(file_lines);
+
+  return true;
+}
 } // namespace pn
