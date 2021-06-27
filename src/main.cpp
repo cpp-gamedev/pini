@@ -1,10 +1,18 @@
-#include "util.hpp"
+#include <ios>
 #include <iostream>
+#include "pini.hpp"
+#include "util.hpp"
 
 int main() {
-  std::vector<std::string> lines = util::get_lines("src/main.cpp");
-  for (auto str : lines) {
-    std::cout << str << std::endl;
-  }
-  std::cout << "\n";
+	pn::pini pin;
+
+	std::string_view raw_input{"a=5\nb=10\n23=c"};
+	std::filesystem::path filename{"test/test.ini"};
+
+	std::cout << std::boolalpha << pin.load_file(filename) << "\n";
+	std::cout << "attack: " << pin.get_uint32("attack ") << "\n";
+	std::cout << "def " << pin.get_uint64("def ") << "\n";
+	std::cout << "health " << pin.get_int64("health ") << "\n";
+	std::cout << "def " << pin.get_double("def ") << "\n";
+	std::cout << "sp " << pin.get_int32("skill points ") << "\n";
 }
