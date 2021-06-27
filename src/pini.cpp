@@ -8,10 +8,8 @@
 
 namespace pn {
 namespace {
-
 pini::map_type read_file(std::filesystem::path const& filename) {
 	std::vector<std::string> lines = util::get_lines(filename);
-
 	return util::insert_pairs(lines);
 }
 

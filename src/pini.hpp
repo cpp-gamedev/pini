@@ -13,7 +13,7 @@ class pini {
   public:
 	using map_type = std::unordered_map<std::string, std::string>;
 
-	map_type get_pairs() { return key_value_pairs; }
+	const map_type& get_pairs() const { return key_value_pairs; }
 	bool load_file(std::filesystem::path const& filename);
 	bool load_text(std::string_view text);
 

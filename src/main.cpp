@@ -9,8 +9,6 @@ int main() {
 	std::string_view raw_input{"a=5\nb=10\n23=c"};
 	std::filesystem::path filename{"test/test.ini"};
 
-	std::unordered_map<std::string, std::string> map = pin.get_pairs();
-
 	std::cout << std::boolalpha << pin.load_file(filename) << "\n";
 	std::cout << "attack: " << pin.get_uint32("attack ") << "\n";
 	std::cout << "def " << pin.get_uint64("def ") << "\n";
