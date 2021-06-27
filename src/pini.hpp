@@ -1,31 +1,37 @@
 #pragma once
 
-#include "util.hpp"
+#include <cstdint>
 #include <filesystem>
 #include <sstream>
+#include <string_view>
 #include <unordered_map>
 #include <vector>
+#include "util.hpp"
 
 namespace pn {
-class reader {
-  std::vector<std::string> file_lines;
-  std::unordered_map<std::string, std::string> key_value_pairs;
-
-public:
-  std::unordered_map<std::string, std::string> get_pairs();
-  // TODO remove excess whitespace from strings
-
-  bool read_file(std::filesystem::path const &filename);
-
-  // divide key-value pairs with `/`
-  // NOTE Must pass string variable. String literal will cause an overload error
-  bool read_file(std::string const &raw_string);
-};
 class pini {
-  std::vector<std::string> file_lines;
+  public:
+	using map_type = std::unordered_map<std::string, std::string>;
 
-public:
-  int read_file(std::filesystem::path const &filename,
-                std::vector<std::string> &file_lines);
+	map_type get_pairs() { return key_value_pairs; }
+	bool load_file(std::filesystem::path const& filename);
+	bool load_text(std::string_view text);
+
+	// return double
+	double get_double(std::string const& key, double def = 0) const;
+	// return unsigned 64 bit integer - <unsigned long long>
+	std::uint64_t get_uint64(std::string const& key, std::uint64_t def = 0) const;
+	// return signed 64 bit integer  - <long long>
+	std::int64_t get_int64(std::string const& key, std::int64_t def = 0) const;
+
+	// return unsigned 32 bit integer
+	std::uint32_t get_uint32(std::string const& key, std::uint32_t def = 0) const;
+	// return signed 32 bit integer
+	std::int32_t get_int32(std::string const& key, std::uint32_t def = 0) const;
+	// return string value
+	std::string_view get_string(std::string const& key) const;
+
+  private:
+	map_type key_value_pairs;
 };
 } // namespace pn

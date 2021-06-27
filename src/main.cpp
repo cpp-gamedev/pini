@@ -1,14 +1,20 @@
+#include <ios>
+#include <iostream>
 #include "pini.hpp"
 #include "util.hpp"
-#include <iostream>
 
 int main() {
-  pn::reader r;
-  std::string raw_input = {"a=5\nb=10\n23=c"};
-  std::filesystem::path filename{"test/test.ini"};
-  r.read_file(raw_input);
-  std::unordered_map<std::string, std::string> key_value_pairs = r.get_pairs();
-  for (const auto &pair : key_value_pairs) {
-    std::cout << "key: " << pair.first << " value: " << pair.second << "\n";
-  }
+	pn::pini pin;
+
+	std::string_view raw_input{"a=5\nb=10\n23=c"};
+	std::filesystem::path filename{"test/test.ini"};
+
+	std::unordered_map<std::string, std::string> map = pin.get_pairs();
+
+	std::cout << std::boolalpha << pin.load_file(filename) << "\n";
+	std::cout << "attack: " << pin.get_uint32("attack ") << "\n";
+	std::cout << "def " << pin.get_uint64("def ") << "\n";
+	std::cout << "health " << pin.get_int64("health ") << "\n";
+	std::cout << "def " << pin.get_double("def ") << "\n";
+	std::cout << "sp " << pin.get_int32("skill points ") << "\n";
 }
