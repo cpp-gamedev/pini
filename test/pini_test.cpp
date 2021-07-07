@@ -1,12 +1,11 @@
 #include <ios>
 #include <iostream>
-#include "pini.hpp"
-#include "util.hpp"
+#include <pini/pini.hpp>
 
 int main() {
 	pn::pini pin;
 
-	std::string_view raw_input{"a=5\nb=10\n23=c"};
+	// std::string_view raw_input{"a=5\nb=10\n23=c"};
 	std::filesystem::path filename{"test/test.ini"};
 
 	std::cout << std::boolalpha << pin.load_file(filename) << "\n";
