@@ -10,7 +10,12 @@ target_include_directories(${PROJECT_NAME} PRIVATE src PUBLIC include)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Werror=return-type)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
-add_subdirectory(test)
+option(PINI_BUILD_TESTS "Build tests" ON)
+
+if(PINI_BUILD_TESTS)
+  enable_testing()
+  add_subdirectory(test)
+endif()
 
 set(CCJSON "${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json")
 if(EXISTS "${CCJSON}")
