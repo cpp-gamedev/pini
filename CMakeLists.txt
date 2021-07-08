@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 
 project(pini)
 add_library(${PROJECT_NAME}     src/util.cpp
-                                src/util.hpp
+                                include/pini/util.hpp
                                 src/pini.cpp
                                 include/pini/pini.hpp)
 add_library(pini::pini ALIAS pini)
