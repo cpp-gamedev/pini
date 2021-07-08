@@ -6,7 +6,6 @@
 #include <string_view>
 #include <unordered_map>
 #include <vector>
-#include "util.hpp"
 
 namespace pn {
 class pini {

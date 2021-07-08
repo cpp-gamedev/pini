@@ -1,5 +1,5 @@
-#include "util.hpp"
 #include <cassert>
+#include <util.hpp>
 
 namespace util {
 
