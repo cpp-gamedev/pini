@@ -44,15 +44,11 @@ double pini::get_double(std::string const& key, double def) const {
 		}
 		return def;
 	}
-	return std::atof(it->second.c_str());
+	return util::string_to_double(it->second);
 }
 
 std::uint64_t pini::get_uint64(std::string const& key, std::uint64_t def) const {
-	if (auto it = key_value_pairs.find(key); it != key_value_pairs.end()) {
-		try {
-			return stoull(it->second);
-		} catch (std::exception const& e) { std::cerr << e.what() << '\n'; }
-	}
+	if (auto it = key_value_pairs.find(key); it != key_value_pairs.end()) { return util::string_to_uint64(it->second); }
 	if (pn::pini::on_msg_t) {
 		std::stringstream str;
 		str << "Key \"" << key << "\" not found.\n";
@@ -62,11 +58,7 @@ std::uint64_t pini::get_uint64(std::string const& key, std::uint64_t def) const 
 }
 
 std::int64_t pini::get_int64(std::string const& key, std::int64_t def) const {
-	if (auto it = key_value_pairs.find(key); it != key_value_pairs.end()) {
-		try {
-			return stoll(it->second);
-		} catch (std::exception const& e) { std::cerr << e.what() << '\n'; }
-	}
+	if (auto it = key_value_pairs.find(key); it != key_value_pairs.end()) { return util::string_to_int32(it->second); }
 	if (pn::pini::on_msg_t) {
 		std::stringstream str;
 		str << "Key \"" << key << "\" not found.\n";
