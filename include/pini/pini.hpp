@@ -30,6 +30,11 @@ class pini {
 	// return string value
 	std::string_view get_string(std::string const& key) const;
 
+	enum class severity { error, warn, info };
+	using on_msg = void (*)(std::string_view, severity);
+	static void default_callback(std::string_view msg, severity level);
+	inline static on_msg on_msg_t = &default_callback;
+
   private:
 	map_type key_value_pairs;
 };

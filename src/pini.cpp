@@ -4,8 +4,7 @@
 #include <string_view>
 #include <vector>
 #include <pini/pini.hpp>
-#include <util.hpp>
-
+#include <pini/util.hpp>
 
 namespace pn {
 namespace {
@@ -37,24 +36,33 @@ bool pini::load_text(std::string_view text) {
 
 double pini::get_double(std::string const& key, double def) const {
 	auto it = key_value_pairs.find(key);
-	if (it == key_value_pairs.end()) { return def; }
-	return std::atof(it->second.c_str());
+	if (it == key_value_pairs.end()) {
+		if (pn::pini::on_msg_t) {
+			std::stringstream str;
+			str << "Key \"" << key << "\" not found.\n";
+			(*pn::pini::on_msg_t)(str.str(), pn::pini::severity::warn);
+		}
+		return def;
+	}
+	return util::string_to_double(it->second);
 }
 
 std::uint64_t pini::get_uint64(std::string const& key, std::uint64_t def) const {
-	if (auto it = key_value_pairs.find(key); it != key_value_pairs.end()) {
-		try {
-			return stoull(it->second);
-		} catch (std::exception const& e) { std::cerr << e.what() << '\n'; }
+	if (auto it = key_value_pairs.find(key); it != key_value_pairs.end()) { return util::string_to_uint64(it->second); }
+	if (pn::pini::on_msg_t) {
+		std::stringstream str;
+		str << "Key \"" << key << "\" not found.\n";
+		(*pn::pini::on_msg_t)(str.str(), pn::pini::severity::warn);
 	}
 	return def;
 }
 
 std::int64_t pini::get_int64(std::string const& key, std::int64_t def) const {
-	if (auto it = key_value_pairs.find(key); it != key_value_pairs.end()) {
-		try {
-			return stoll(it->second);
-		} catch (std::exception const& e) { std::cerr << e.what() << '\n'; }
+	if (auto it = key_value_pairs.find(key); it != key_value_pairs.end()) { return util::string_to_int32(it->second); }
+	if (pn::pini::on_msg_t) {
+		std::stringstream str;
+		str << "Key \"" << key << "\" not found.\n";
+		(*pn::pini::on_msg_t)(str.str(), pn::pini::severity::warn);
 	}
 	return def;
 }
@@ -65,7 +73,20 @@ std::int32_t pini::get_int32(std::string const& key, std::uint32_t def) const { 
 
 std::string_view pini::get_string(std::string const& key) const {
 	auto it = key_value_pairs.find(key);
-	if (it == key_value_pairs.end()) { return {}; }
+	if (it == key_value_pairs.end()) {
+		if (pn::pini::on_msg_t) {
+			std::stringstream str;
+			str << "Key \"" << key << "\" not found.\n";
+			(*pn::pini::on_msg_t)(str.str(), pn::pini::severity::warn);
+		}
+		return {};
+	}
 	return it->second;
 }
+
+void pini::default_callback(std::string_view msg, severity level) {
+	auto& out = level == severity::error ? std::cerr : std::cout;
+	out << msg << '\n';
+}
+
 } // namespace pn
