@@ -5,10 +5,11 @@
 int main() {
 	pn::pini pin;
 
-	std::string_view raw_input{"= 5\n#b=10\n c  = 23"};
-	// std::filesystem::path filename{"/test/test.ini"};
-	if (!pin.load_text(raw_input)) { return 1; }
-	std::cout << pin.get_int32("a");
-	std::cout << pin.get_int32("b");
-	std::cout << pin.get_int32("c");
+	// std::string_view raw_input{"= 5\n#b=10\n c  = 23"};
+	std::filesystem::path filename{"test/test.pini"};
+	if (!pin.load_file(filename)) { return 1; }
+	for (auto& pair : pin) { std::cout << pair.first << " " << pair.second << '\n'; }
+	std::cout << pin.size() << " | " << pin.is_empty();
+	pin.erase("def");
+	for (auto& pair : pin) { std::cout << pair.first << " " << pair.second << '\n'; }
 }

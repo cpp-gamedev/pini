@@ -1,4 +1,6 @@
 health = 9
 attack = 4.5
+= 32
+# this is a comment
 def = -9.2314g
 skill points = 8

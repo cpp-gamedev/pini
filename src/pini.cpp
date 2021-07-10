@@ -89,4 +89,11 @@ void pini::default_callback(std::string_view msg, severity level) {
 	out << msg << '\n';
 }
 
+bool pini::is_empty() { return key_value_pairs.empty(); }
+std::size_t pini::size() { return key_value_pairs.size(); }
+void pini::clear() { key_value_pairs.clear(); }
+pini::const_iterator pini::erase(pini::const_iterator pos) { return key_value_pairs.erase(pos); }
+pini::const_iterator pini::erase(pini::const_iterator first, pini::const_iterator last) { return key_value_pairs.erase(first, last); }
+std::size_t pini::erase(std::string const& key) { return key_value_pairs.erase(key); }
+
 } // namespace pn

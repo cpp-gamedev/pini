@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <filesystem>
 #include <sstream>
@@ -15,6 +16,13 @@ class pini {
 	map_type const& get_pairs() const { return key_value_pairs; }
 	bool load_file(std::filesystem::path const& filename);
 	bool load_text(std::string_view text);
+
+	// iteration
+
+	using const_iterator = std::unordered_map<std::string, std::string>::const_iterator;
+
+	const_iterator begin() const { return key_value_pairs.begin(); }
+	const_iterator end() const { return key_value_pairs.end(); }
 
 	// return double
 	double get_double(std::string const& key, double def = 0) const;
@@ -34,6 +42,13 @@ class pini {
 	using on_msg = void (*)(std::string_view, severity);
 	static void default_callback(std::string_view msg, severity level);
 	inline static on_msg on_msg_t = &default_callback;
+
+	bool is_empty();
+	std::size_t size();
+	void clear();
+	const_iterator erase(const_iterator pos);
+	const_iterator erase(const_iterator first, const_iterator last);
+	std::size_t erase(std::string const& key);
 
   private:
 	map_type key_value_pairs;
