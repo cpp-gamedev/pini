@@ -37,10 +37,10 @@ bool pini::load_text(std::string_view text) {
 double pini::get_double(std::string const& key, double def) const {
 	auto it = key_value_pairs.find(key);
 	if (it == key_value_pairs.end()) {
-		if (pn::pini::on_msg_t) {
+		if (pn::pini::on_msg) {
 			std::stringstream str;
 			str << "Key \"" << key << "\" not found.\n";
-			(*pn::pini::on_msg_t)(str.str(), pn::pini::severity::warn);
+			(*pn::pini::on_msg)(str.str(), pn::pini::severity::warn);
 		}
 		return def;
 	}
@@ -49,20 +49,20 @@ double pini::get_double(std::string const& key, double def) const {
 
 std::uint64_t pini::get_uint64(std::string const& key, std::uint64_t def) const {
 	if (auto it = key_value_pairs.find(key); it != key_value_pairs.end()) { return util::string_to_uint64(it->second); }
-	if (pn::pini::on_msg_t) {
+	if (pn::pini::on_msg) {
 		std::stringstream str;
 		str << "Key \"" << key << "\" not found.\n";
-		(*pn::pini::on_msg_t)(str.str(), pn::pini::severity::warn);
+		(*pn::pini::on_msg)(str.str(), pn::pini::severity::warn);
 	}
 	return def;
 }
 
 std::int64_t pini::get_int64(std::string const& key, std::int64_t def) const {
 	if (auto it = key_value_pairs.find(key); it != key_value_pairs.end()) { return util::string_to_int32(it->second); }
-	if (pn::pini::on_msg_t) {
+	if (pn::pini::on_msg) {
 		std::stringstream str;
 		str << "Key \"" << key << "\" not found.\n";
-		(*pn::pini::on_msg_t)(str.str(), pn::pini::severity::warn);
+		(*pn::pini::on_msg)(str.str(), pn::pini::severity::warn);
 	}
 	return def;
 }
@@ -74,10 +74,10 @@ std::int32_t pini::get_int32(std::string const& key, std::uint32_t def) const { 
 std::string_view pini::get_string(std::string const& key) const {
 	auto it = key_value_pairs.find(key);
 	if (it == key_value_pairs.end()) {
-		if (pn::pini::on_msg_t) {
+		if (pn::pini::on_msg) {
 			std::stringstream str;
 			str << "Key \"" << key << "\" not found.\n";
-			(*pn::pini::on_msg_t)(str.str(), pn::pini::severity::warn);
+			(*pn::pini::on_msg)(str.str(), pn::pini::severity::warn);
 		}
 		return {};
 	}
@@ -89,8 +89,6 @@ void pini::default_callback(std::string_view msg, severity level) {
 	out << msg << '\n';
 }
 
-bool pini::is_empty() { return key_value_pairs.empty(); }
-std::size_t pini::size() { return key_value_pairs.size(); }
 void pini::clear() { key_value_pairs.clear(); }
 pini::const_iterator pini::erase(pini::const_iterator pos) { return key_value_pairs.erase(pos); }
 pini::const_iterator pini::erase(pini::const_iterator first, pini::const_iterator last) { return key_value_pairs.erase(first, last); }
