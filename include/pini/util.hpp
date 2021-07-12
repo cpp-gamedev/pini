@@ -10,7 +10,8 @@
 #include <unordered_map>
 #include <vector>
 
-namespace util {
+
+namespace pn::util {
 // return vector of strings containing each line of the given file
 std::vector<std::string> get_lines(std::filesystem::path const& filename);
 
@@ -22,7 +23,7 @@ std::string_view trim_whitespace(std::string_view str);
 
 // data conversions:
 
-double string_to_double(std::string const& str, std::uint64_t def = 0);
+double string_to_double(std::string const& str, double def = 0);
 
 std::uint64_t string_to_uint64(std::string const& str, std::uint64_t def = 0);
 
@@ -32,4 +33,4 @@ std::uint32_t string_to_uint32(std::string const& str, std::uint64_t def = 0);
 
 std::int32_t string_to_int32(std::string const& str, std::uint64_t def = 0);
 
-} // namespace util
+} // namespace pn::util
