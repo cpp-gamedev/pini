@@ -49,8 +49,11 @@ class pini {
 	const_iterator erase(const_iterator pos);
 	const_iterator erase(const_iterator first, const_iterator last);
 	std::size_t erase(std::string const& key);
+	bool contains(std::string const& key) const;
 
   private:
 	map_type key_value_pairs;
 };
+// implementation starts here
+inline bool pini::contains(std::string const& key) const { return key_value_pairs.find(key) != key_value_pairs.end(); }
 } // namespace pn

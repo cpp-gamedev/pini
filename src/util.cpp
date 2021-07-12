@@ -27,10 +27,12 @@ std::unordered_map<std::string, std::string> util::insert_pairs(std::vector<std:
 		++line_number;
 		if (auto delimeter_pos = str.find('='); delimeter_pos != std::string::npos) {
 			std::string_view const key = trim_whitespace(str.substr(0, delimeter_pos));
-			if (key.empty() && pn::pini::on_msg) {
-				std::stringstream str;
-				str << "Line number " << line_number << " is not valid because the key is empty.\n";
-				(*pn::pini::on_msg)(str.str(), pn::pini::severity::warn);
+			if (key.empty()) {
+				if (pn::pini::on_msg) {
+					std::stringstream str;
+					str << "Line number " << line_number << " is not valid because the key is empty.\n";
+					(*pn::pini::on_msg)(str.str(), pn::pini::severity::warn);
+				}
 			} else {
 				std::string_view const value = trim_whitespace(str.substr(delimeter_pos + 1));
 				if (key[0] != '#') { key_value_pairs.insert({std::string(key), std::string(value)}); }
