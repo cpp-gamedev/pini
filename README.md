@@ -1,10 +1,10 @@
 # PINI
 
-Pini is a small C++ library for reading `p`ini files and storing them as key-value pairs.
+Pini is a small C++ library for reading .pini files and storing them as key-value pairs.
 
 ## Pini syntax
 
-A `.pini` file can have key-value pairs and comments.
+A `.pini` file can contain key-value pairs of strings, as well as comments
 
 ```ini	
 race = goblin
@@ -19,7 +19,7 @@ defense = 40
 
 ### Reading files
 
-In order to parse `.pini` files, you first has to create a `pini` object:
+In order to parse `.pini` files, you first have to create a `pini` object:
 
 ```cpp
 pn::pini pin
@@ -82,6 +82,7 @@ All key-value pairs are stored inside an `std::unordered_map`, and can be retrie
 ```cpp
 // return double
 double get_double(std::string const& key, double def = 0) const;
+
 // return unsigned 64 bit integer - <unsigned long long>
 std::uint64_t get_uint64(std::string const& key, std::uint64_t def = 0) const;
 // return signed 64 bit integer  - <long long>
@@ -99,7 +100,7 @@ std::string_view get_string(std::string const& key) const;
 Example: 
 
 ```cpp
-double health = get_double("health");
+double health = pin.get_double("health");
 ```
 
 ### Helper functions: 
