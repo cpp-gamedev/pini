@@ -43,7 +43,7 @@ class pini {
 	static void default_callback(std::string_view msg, severity level);
 	inline static on_msg_t on_msg = &default_callback;
 
-	bool is_empty() const { return key_value_pairs.empty(); }
+	bool empty() const { return key_value_pairs.empty(); }
 	std::size_t size() const { return key_value_pairs.size(); }
 	void clear();
 	const_iterator erase(const_iterator pos);

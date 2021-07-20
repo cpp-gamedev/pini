@@ -107,7 +107,7 @@ double health = pin.get_double("health");
 
 `pini` also contains several helper functions that work like the ones for `std::unordered_map`:
 
-- `is_empty()`
+- `empty()`
 - `size()`
 - `clear()`
 - `erase()`

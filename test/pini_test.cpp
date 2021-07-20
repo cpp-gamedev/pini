@@ -14,13 +14,13 @@ int main() {
 		if (level == pn::pini::severity::error) { ret = 1; }
 	};
 	if (!pin.load_file(filename)) { return 1; }
-	if (pin.is_empty()) { return 1; }
+	if (pin.empty()) { return 1; }
 	if (pin.contains({})) { return 1; }
 	if (pin.contains("#comment")) { return 1; }
 	if (pin.get_int32("health") != 9) { return 1; }
 
 	for (auto& pair : pin) { std::cout << pair.first << " " << pair.second << '\n'; }
-	std::cout << pin.size() << " | " << pin.is_empty();
+	std::cout << pin.size() << " | " << pin.empty();
 	pin.erase("def");
 	for (auto& pair : pin) { std::cout << pair.first << " " << pair.second << '\n'; }
 	return ret;
