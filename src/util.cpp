@@ -1,7 +1,5 @@
-#include <cassert>
 #include <cctype>
-#include <cstddef>
-#include <string_view>
+
 #include <pini/pini.hpp>
 #include <pini/util.hpp>
 namespace pn {
@@ -20,13 +18,13 @@ std::vector<std::string> util::get_lines(std::filesystem::path const& filename) 
 	return ret;
 }
 
-std::unordered_map<std::string, std::string> util::insert_pairs(std::vector<std::string> file_lines) {
+std::unordered_map<std::string, std::string> util::insert_pairs(std::vector<std::string> const& file_lines) {
 	std::unordered_map<std::string, std::string> key_value_pairs;
 	std::size_t line_number = 0;
 	for (const auto& str : file_lines) {
 		++line_number;
 		if (auto delimeter_pos = str.find('='); delimeter_pos != std::string::npos) {
-			std::string_view const key = trim_whitespace(str.substr(0, delimeter_pos));
+			std::string const key = trim_whitespace(str.substr(0, delimeter_pos));
 			if (key.empty()) {
 				if (pn::pini::on_msg) {
 					std::stringstream str;
@@ -34,7 +32,7 @@ std::unordered_map<std::string, std::string> util::insert_pairs(std::vector<std:
 					(*pn::pini::on_msg)(str.str(), pn::pini::severity::warn);
 				}
 			} else {
-				std::string_view const value = trim_whitespace(str.substr(delimeter_pos + 1));
+				std::string const value = trim_whitespace(str.substr(delimeter_pos + 1));
 				if (key[0] != '#') { key_value_pairs.insert({std::string(key), std::string(value)}); }
 			}
 		}
@@ -42,7 +40,7 @@ std::unordered_map<std::string, std::string> util::insert_pairs(std::vector<std:
 	return key_value_pairs;
 }
 
-std::string_view util::trim_whitespace(std::string_view str) {
+std::string util::trim_whitespace(std::string const& str) {
 	if (str.empty()) { return {}; }
 	std::size_t start = 0;
 	std::size_t finish = str.size();

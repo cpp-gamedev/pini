@@ -15,7 +15,7 @@ class pini {
 
 	map_type const& get_pairs() const { return key_value_pairs; }
 	bool load_file(std::filesystem::path const& filename);
-	bool load_text(std::string_view text);
+	bool load_text(std::string const& text);
 
 	// iteration
 
