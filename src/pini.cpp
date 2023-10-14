@@ -13,7 +13,7 @@ pini::map_type read_file(std::filesystem::path const& filename) {
 	return util::insert_pairs(lines);
 }
 
-pini::map_type read_text(std::string_view text) {
+pini::map_type read_text(std::string const& text) {
 	std::string str;
 	std::stringstream str_stream;
 	str_stream << text;
@@ -29,7 +29,7 @@ bool pini::load_file(std::filesystem::path const& filename) {
 	return !key_value_pairs.empty();
 }
 
-bool pini::load_text(std::string_view text) {
+bool pini::load_text(std::string const& text) {
 	key_value_pairs = read_text(text);
 	return !key_value_pairs.empty();
 }

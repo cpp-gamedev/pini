@@ -17,9 +17,9 @@ std::vector<std::string> get_lines(std::filesystem::path const& filename);
 
 // extract key-value pairs from given vector of strings and insert them in an
 // unordered_map
-std::unordered_map<std::string, std::string> insert_pairs(std::vector<std::string> file_lines);
+std::unordered_map<std::string, std::string> insert_pairs(std::vector<std::string> const& file_lines);
 
-std::string_view trim_whitespace(std::string_view str);
+std::string trim_whitespace(std::string const& str);
 
 // data conversions:
 
